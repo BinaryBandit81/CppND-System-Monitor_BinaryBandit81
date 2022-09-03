@@ -2,6 +2,7 @@
 #define PROCESS_H
 
 #include <string>
+#include <vector>
 /*
 Basic class for Process representation
 It contains relevant attributes as shown below
@@ -16,8 +17,14 @@ class Process {
   long int UpTime();                       // TODO: See src/process.cpp
   bool operator<(Process const& a) const;  // TODO: See src/process.cpp
 
+  Process(int pid) : pid(pid){};
+
   // TODO: Declare any necessary private members
  private:
+  int pid{0};
+  std::vector<double> curCpu{3, 0.0};
+  std::vector<double> lstCpu{3, 0.0};
+  int curRam{0};
 };
 
 #endif
