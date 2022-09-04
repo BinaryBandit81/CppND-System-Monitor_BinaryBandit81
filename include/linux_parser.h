@@ -24,8 +24,8 @@ const std::string filterRunningProcesses("procs_running");
 const std::string filterMemTotalString("MemTotal:");
 const std::string filterMemFreeString("MemFree:");
 const std::string filterCpu("cpu");
-const std::string filterUID("Uid:");
-const std::string filterProcMem("VmRSS:");  // The string can be VmSize As well
+const std::string filterUID("Uid");
+const std::string filterProcMem("VmRSS");  // The string can be VmSize As well
 
 // Helperfunction
 std::string readFile(std::string filename, std::string keytoFind);
