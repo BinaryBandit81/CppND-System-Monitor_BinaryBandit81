@@ -110,8 +110,8 @@ std::string LinuxParser::readLine(std::string filename, int lineToGet,
 // TODO: Read and return the system memory utilization
 float LinuxParser::MemoryUtilization() {
   int memTotal, memFree;
-  memTotal = std::stoi(readFile(kProcDirectory + kMeminfoFilename, "MemTotal"));
-  memFree = std::stoi(readFile(kProcDirectory + kMeminfoFilename, "MemFree"));
+  memTotal = std::stoi(readFile(kProcDirectory + kMeminfoFilename, filterMemTotalString));
+  memFree = std::stoi(readFile(kProcDirectory + kMeminfoFilename,  filterMemFreeString));
   return float(memTotal - memFree) / memTotal;
 }
 // TODO: Read and return the system uptime
@@ -123,26 +123,13 @@ long LinuxParser::UpTime() {
   return uptime;
 }
 
-// TODO: Read and return the number of jiffies for the system
-long LinuxParser::Jiffies() { return 0; }
-
-// TODO: Read and return the number of active jiffies for a PID
-// REMOVE: [[maybe_unused]] once you define the function
-long LinuxParser::ActiveJiffies(int pid [[maybe_unused]]) { return 0; }
-
-// TODO: Read and return the number of active jiffies for the system
-long LinuxParser::ActiveJiffies() { return 0; }
-
-// TODO: Read and return the number of idle jiffies for the system
-long LinuxParser::IdleJiffies() { return 0; }
-
 // TODO: Read and return CPU utilization
 vector<string> LinuxParser::CpuUtilization() {
   string key, cpuUtilValue;
   vector<string> cpuUtil;
   std::istringstream stream(readLine(kProcDirectory + kStatFilename, 1));
   for (string cpuUtilValue; stream >> cpuUtilValue;) {
-    if (cpuUtilValue != "cpu") cpuUtil.push_back(cpuUtilValue);
+    if (cpuUtilValue != filterCpu) cpuUtil.push_back(cpuUtilValue);
   }
   return cpuUtil;
 }
@@ -186,12 +173,12 @@ vector<double> LinuxParser::CpuUtilization(int pid, vector<double> lastUti) {
 
 // TODO: Read and return the total number of processes
 int LinuxParser::TotalProcesses() {
-  return std::stoi(readFile(kProcDirectory + kStatFilename, "processes"));
+  return std::stoi(readFile(kProcDirectory + kStatFilename, filterProcesses));
 }
 
 // TODO: Read and return the number of running processes
 int LinuxParser::RunningProcesses() {
-  return std::stoi(readFile(kProcDirectory + kStatFilename, "procs_running"));
+  return std::stoi(readFile(kProcDirectory + kStatFilename, filterRunningProcesses));
 }
 
 // TODO: Read and return the command associated with a process
@@ -203,16 +190,17 @@ string LinuxParser::Command(int pid [[maybe_unused]]) {
 // TODO: Read and return the memory used by a process
 // REMOVE: [[maybe_unused]] once you define the function
 string LinuxParser::Ram(int pid) {  //[[maybe_unused]]) {
-  return to_string(
+    // using VmRSS instead of VmSize to get the physical ram use
+    return to_string(
       stoi(readFile(kProcDirectory + to_string(pid) + kStatusFilename,
-                    "VmSize")) /
+                    filterProcMem)) /
       1024);
 }
 
 // TODO: Read and return the user ID associated with a process
 // REMOVE: [[maybe_unused]] once you define the function
 string LinuxParser::Uid(int pid [[maybe_unused]]) {
-  return readFile(kProcDirectory + to_string(pid) + kStatusFilename, "Uid");
+  return readFile(kProcDirectory + to_string(pid) + kStatusFilename, filterUID);
 }
 
 // TODO: Read and return the user associated with a process

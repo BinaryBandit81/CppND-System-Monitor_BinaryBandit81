@@ -18,6 +18,15 @@ const std::string kVersionFilename{"/version"};
 const std::string kOSPath{"/etc/os-release"};
 const std::string kPasswordPath{"/etc/passwd"};
 
+// Entries
+const string filterProcesses("processes");
+const string filterRunningProcesses("procs_running");
+const string filterMemTotalString("MemTotal:");
+const string filterMemFreeString("MemFree:");
+const string filterCpu("cpu");
+const string filterUID("Uid:");
+const string filterProcMem("VmRSS:");  // The string can be VmSize As well
+
 // Helperfunction
 std::string readFile(std::string filename, std::string keytoFind);
 std::string readLine(std::string filename, int lineToGet,
@@ -48,10 +57,6 @@ enum CPUStates {
 std::vector<std::string> CpuUtilization();
 std::vector<double> CpuUtilization(int pid);
 std::vector<double> CpuUtilization(int pid, std::vector<double> lastUti);
-long Jiffies();
-long ActiveJiffies();
-long ActiveJiffies(int pid);
-long IdleJiffies();
 
 // Processes
 std::string Command(int pid);
