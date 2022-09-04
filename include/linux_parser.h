@@ -19,13 +19,13 @@ const std::string kOSPath{"/etc/os-release"};
 const std::string kPasswordPath{"/etc/passwd"};
 
 // Entries
-const string filterProcesses("processes");
-const string filterRunningProcesses("procs_running");
-const string filterMemTotalString("MemTotal:");
-const string filterMemFreeString("MemFree:");
-const string filterCpu("cpu");
-const string filterUID("Uid:");
-const string filterProcMem("VmRSS:");  // The string can be VmSize As well
+const std::string filterProcesses("processes");
+const std::string filterRunningProcesses("procs_running");
+const std::string filterMemTotalString("MemTotal:");
+const std::string filterMemFreeString("MemFree:");
+const std::string filterCpu("cpu");
+const std::string filterUID("Uid:");
+const std::string filterProcMem("VmRSS:");  // The string can be VmSize As well
 
 // Helperfunction
 std::string readFile(std::string filename, std::string keytoFind);
